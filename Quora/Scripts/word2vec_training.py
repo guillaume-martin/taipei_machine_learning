@@ -14,7 +14,6 @@ import re
 
 from nltk.corpus import stopwords
 from nltk.stem import SnowballStemmer
-from string import punctuation
 from gensim.models import word2vec
 
 #%%
@@ -69,7 +68,7 @@ def question_to_words(question, remove_stopwords=False, stem_words=False):
 #%%
 
 # We import both the training and the test set.
-df_train = pd.read_csv(DATA_DIR+TRAIN_DATA_FILE)
+df_train = pd.read_csv(DATA_DIR + TRAIN_DATA_FILE)
 df_train = df_train[['question1','question2']]
 df_test = pd.read_csv(DATA_DIR + TEST_DATA_FILE)
 df_test = df_test[['question1','question2']]
@@ -78,7 +77,7 @@ df_test = df_test[['question1','question2']]
 df = pd.concat([df_train, df_test])
 
 # We create lists of words for each question. 
-# To train Word2Vec, it is better to leave stop words
+# To train Word2Vec, it is better to keep the stop words
 df['words1'] = df['question1'].apply(lambda x: question_to_words(str(x)))
 df['words2'] = df['question2'].apply(lambda x: question_to_words(str(x)))
 df.head(20)
@@ -94,7 +93,7 @@ min_word_count = 40 # mini freq for words to be kept
 num_workers = 4
 context = 20
 downsampling = 1e-3
-model_name = 'w2v_' + str(num_features) + "features_" + str(min_word_count) + "minwords_" + str(context) + "context"
+model_name = 'w2v_' + str(num_features) + "features_" + str(min_word_count) + "minwords_" + str(context) + "context.model"
 
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 # learn the vocabulary
